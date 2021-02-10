@@ -2,19 +2,17 @@
 
 namespace App\Shop;
 
-use App\Exceptions\AvailableNotFoundException;
-use App\Exceptions\NameNotFoundException;
 use App\Exceptions\PriceNotFoundException;
 use App\Exceptions\ProductNotFoundException;
 use App\Interfaces\Shop;
 use App\Traits\Parser;
 
-class LDLC implements Shop
+class TopAchat implements Shop
 {
     use Parser;
 
     /** @var string $baseUrl */
-    protected $baseUrl = 'https://www.ldlc.com/';
+    protected $baseUrl = 'https://www.topachat.com/';
 
     /** @var string $path */
     protected $path;
@@ -36,7 +34,7 @@ class LDLC implements Shop
 
     public function check()
     {
-        if ($this->crawler->evaluate('//div[@class="main p404"]')->count() > 0) {
+        if ($this->crawler->evaluate('//body[@class="error"]')->count() > 0) {
             throw new ProductNotFoundException(__CLASS__ . " Product on this page {$this->productPageUrl()} does not exist.");
         }
         return $this;
@@ -44,30 +42,23 @@ class LDLC implements Shop
 
     public function productPrice() : ?string
     {
-        $result = $this->crawler->evaluate('//aside/div[@class="price"]/div');
+        $result = $this->crawler->evaluate('//section[@id="panier"]/div[@class="prix"]/div[@class="eproduct NOR"]/span[1]');
         if ($result->count()) {
-            return str_replace('€', '.', $result->text());
+            if (preg_match('/(?P<price>[0-9.]*)/', $result->text(), $matches)) {
+                return($matches['price']);
+            }
         }
         throw new PriceNotFoundException(__CLASS__ . " Cannot found price for {$this->productPageUrl()}");
     }
 
     public function productName() : ?string
     {
-        $result = $this->crawler->evaluate('//h1[@class="title-1"]');
-        if ($result->count()) {
-            return  $result->text();
-        }
-        throw new NameNotFoundException(__CLASS__ . " Cannot found name for {$this->productPageUrl()}");
+        return $this->crawler->evaluate('//div[@class="libelle"]/h1[@class="fn"]')->text();
     }
 
     public function productAvailable() : bool
     {
-        $result = $this->crawler->evaluate('//aside/div[@id="product-page-stock"]/div[@class="website"]/div[@class="content"]/div[1]/span[1]');
-        if ($result->count()) {
-            $result = strtolower($result->text());
-            return $result === 'en stock';
-        }
-        throw new AvailableNotFoundException(__CLASS__ . " Cannot found availability for {$this->productPageUrl()}");
+        return $this->crawler->evaluate('//section[@id="panier"][@class="cart-box en-stock"]')->count() > 0;
     }
 
     public function productPageUrl():string
