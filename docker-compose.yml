@@ -1,0 +1,32 @@
+version: "3.3"
+services:
+    cgudispo-pmt:
+        container_name: cgudispo
+        build:
+            context: .
+            dockerfile: .docker/Dockerfile
+        image: cgudispo:1
+        restart: always
+        expose:
+            - "80"
+            - "443"
+        environment:
+            - VIRTUAL_HOST=${VIRTUAL_HOST:?set it in .env}
+            - APACHE_RUN_USER=www-data
+            - APACHE_RUN_GROUP=www-data
+            - LETSENCRYPT_HOST=${VIRTUAL_HOST:?set it in .env}
+            - LETSENCRYPT_EMAIL=frederick@podmytube.com
+        volumes:
+            - .:/app
+            - /etc/localtime:/etc/localtime:ro
+            - /etc/timezone:/etc/timezone:ro
+        healthcheck:
+            test: bash -c "[ -f /app/vendor/autoload.php ]"
+            timeout: 10s
+            retries: 30
+        networks:
+            - nginx-proxy
+
+networks:
+    nginx-proxy:
+        external: true
