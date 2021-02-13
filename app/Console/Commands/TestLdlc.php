@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Goutte\Client;
 use Illuminate\Console\Command;
+use Symfony\Component\DomCrawler\Crawler;
 
 class TestLdlc extends Command
 {
@@ -40,14 +41,13 @@ class TestLdlc extends Command
     {
         $client = new Client();
 
-        $crawler = $client->request('GET', 'https://www.ldlc.com/fiche/PB00394604.html');
+        $crawler = $client->request('GET', 'https://www.ldlc.com/informatique/pieces-informatique/carte-graphique-interne/c4684/+fv1026-5801+fv121-19365.html');
 
-        //$price = $crawler->evaluate('//div[@class="lister-list"][1]//h3/a');
-        $title = $crawler->evaluate('//h1[@class="title-1"]')->text();
-        $price = $crawler->evaluate('//aside/div[@class="price"]/div')->text();
-        $available = $crawler->evaluate('//aside/div[@id="product-page-stock"]/div[@class="website"]/div[@class="content"]/div[1]/span[1]')->text();
+        $items = $crawler->evaluate('//div[@class="listing-product"]/ul[1]/li')->each(function (Crawler $node) {
+            dd(get_class($node));
+            dump($node->text());
+        });
 
-        dd($title, $price, $available);
         return 0;
     }
 }
