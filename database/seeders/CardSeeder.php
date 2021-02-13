@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use App\Models\Card;
 use App\Models\Chipset;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
+use LogicException;
 
 class CardSeeder extends Seeder
 {
@@ -19,6 +21,9 @@ class CardSeeder extends Seeder
          * RTX 3060 TI
          */
         $rtx3060ti = Chipset::bySlug('rtx-3060-ti')->id;
+        if ($rtx3060ti === null) {
+            throw new LogicException('Should should have been seed first.');
+        }
         $data = [
             ['name' => 'ZOTAC GAMING GEFORCE RTX 3060 Ti Twin Edge', 'chipset_id' => $rtx3060ti, 'available' => false],
             ['name' => 'MSI GeForce RTX 3060 Ti Ventus 2X OC', 'chipset_id' => $rtx3060ti, 'available' => false],
@@ -37,6 +42,7 @@ class CardSeeder extends Seeder
             function ($item) use (&$index) {
                 return array_merge($item, [
                     'id' => $index++,
+                    'slug' => Str::slug($item['name']),
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);

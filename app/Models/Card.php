@@ -25,8 +25,13 @@ class Card extends Model
         return $this->belongsTo(Chipset::class);
     }
 
-    public function links()
+    public function InShopProduct()
     {
-        return $this->hasMany(Link::class);
+        return $this->hasMany(InShopProduct::class);
+    }
+
+    public static function bySlug(string $slug): ?Card
+    {
+        return self::where('slug', $slug)->first();
     }
 }

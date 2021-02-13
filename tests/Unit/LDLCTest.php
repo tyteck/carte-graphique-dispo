@@ -12,8 +12,8 @@ class LDLCTest extends TestCase
 {
     use RefreshDatabase;
 
-    public const ASUS_GEFORCE_ROG_STRIX_RTX_3060_TI = 'fiche/PB00394604.html';
-    public const AVAILABLE_PRODUCT = 'fiche/PB00387288.html';
+    public const ASUS_GEFORCE_ROG_STRIX_RTX_3060_TI = 'PB00394604';
+    public const AVAILABLE_PRODUCT = 'PB00387288';
 
     public function setUp():void
     {
@@ -52,7 +52,7 @@ class LDLCTest extends TestCase
     public function testProductPageUrl()
     {
         $this->assertEquals(
-            'https://www.ldlc.com/' . self::ASUS_GEFORCE_ROG_STRIX_RTX_3060_TI,
+            'https://www.ldlc.com/fiche/' . self::ASUS_GEFORCE_ROG_STRIX_RTX_3060_TI . '.html',
             LDLC::get(self::ASUS_GEFORCE_ROG_STRIX_RTX_3060_TI)->productPageUrl()
         );
     }

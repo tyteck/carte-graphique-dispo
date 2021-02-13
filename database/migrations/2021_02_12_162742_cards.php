@@ -16,6 +16,7 @@ class Cards extends Migration
         Schema::create('cards', function (Blueprint $table) {
             $table->id();
             $table->string('name'); // ZOTAC GAMING GEFORCE RTX 3060 Ti Twin Edge
+            $table->string('slug'); // zotac-gaming-geforce-rtx-3060-ti-twin-edge
             $table->unsignedSmallInteger('chipset_id');
             $table->boolean('available')->default(false);
             $table->timestamps();

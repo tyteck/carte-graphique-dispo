@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Card;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 class CardFactory extends Factory
 {
@@ -21,8 +22,10 @@ class CardFactory extends Factory
      */
     public function definition()
     {
+        $name = $attributes['name'] ?? $this->faker->name;
         return [
-            'name' => $attributes['name'] ?? $this->faker->name,
+            'name' => $name,
+            'slug' => Str::slug($name),
             'available' => $attributes['available'] ?? false,
         ];
     }

@@ -12,8 +12,8 @@ class TopAchatTest extends TestCase
 {
     use RefreshDatabase;
 
-    public const ASUS_GEFORCE_ROG_STRIX_RTX_3060_TI = 'pages/detail2_cat_est_micro_puis_rubrique_est_wgfx_pcie_puis_ref_est_in20006243.html';
-    public const AVAILABLE_PRODUCT = 'pages/detail2_cat_est_gaming_puis_rubrique_est_wg_pcsou_puis_ref_est_in10114919.html';
+    public const ASUS_GEFORCE_ROG_STRIX_RTX_3060_TI = '20006243';
+    public const AVAILABLE_PRODUCT = '10095283';
 
     public function setUp():void
     {
@@ -52,7 +52,7 @@ class TopAchatTest extends TestCase
     public function testProductPageUrl()
     {
         $this->assertEquals(
-            'https://www.topachat.com/' . self::ASUS_GEFORCE_ROG_STRIX_RTX_3060_TI,
+            'https://www.topachat.com/pages/detail2_cat_est_micro_puis_rubrique_est_wgfx_pcie_puis_ref_est_in' . self::ASUS_GEFORCE_ROG_STRIX_RTX_3060_TI . '.html',
             TopAchat::get(self::ASUS_GEFORCE_ROG_STRIX_RTX_3060_TI)->productPageUrl()
         );
     }

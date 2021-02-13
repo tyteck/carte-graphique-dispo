@@ -12,8 +12,8 @@ class MaterielTest extends TestCase
 {
     use RefreshDatabase;
 
-    public const ASUS_GEFORCE_ROG_STRIX_RTX_3060_TI = 'produit/202011040047.html';
-    public const AVAILABLE_PRODUCT = 'produit/201909300069.html';
+    public const ASUS_GEFORCE_ROG_STRIX_RTX_3060_TI = '202011040047';
+    public const AVAILABLE_PRODUCT = '201909300069';
 
     public function setUp():void
     {
@@ -52,7 +52,7 @@ class MaterielTest extends TestCase
     public function testProductPageUrl()
     {
         $this->assertEquals(
-            'https://www.materiel.net/' . self::ASUS_GEFORCE_ROG_STRIX_RTX_3060_TI,
+            'https://www.materiel.net/produit/' . self::ASUS_GEFORCE_ROG_STRIX_RTX_3060_TI . '.html',
             Materiel::get(self::ASUS_GEFORCE_ROG_STRIX_RTX_3060_TI)->productPageUrl()
         );
     }

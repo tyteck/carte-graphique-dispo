@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             ChipsetSeeder::class,
             ShopSeeder::class,
             CardSeeder::class,
+            InShopProductSeeder::class,
         ]);
     }
 }

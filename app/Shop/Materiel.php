@@ -16,26 +16,26 @@ class Materiel implements Shopable
     /** @var \App\Models\Shop $shop */
     protected $shop;
 
-    /** @var string $path */
-    protected $path;
+    /** @var string $productId */
+    protected $productId;
 
     /** @var \Symfony\Component\DomCrawler\Crawler $crawler*/
     protected $crawler ;
 
-    private function __construct(string $path)
+    private function __construct(string $productId)
     {
         $this->shop = Shop::bySlug('materielnet');
         if ($this->shop === null) {
             throw new UnknownShopException('This shop ' . __CLASS__ . ' is unknown.');
         }
-        $this->path = $path;
+        $this->productId = $productId;
         $this->crawler = $this->parse($this->productPageUrl());
         $this->check();
     }
 
-    public static function get(string $path)
+    public static function get(string $productId)
     {
-        return new static($path);
+        return new static($productId);
     }
 
     public function check()
@@ -68,6 +68,6 @@ class Materiel implements Shopable
 
     public function productPageUrl():string
     {
-        return $this->shop->base_url . $this->path;
+        return $this->shop->base_url . 'produit/' . $this->productId . '.html';
     }
 }

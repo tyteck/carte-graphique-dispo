@@ -23,8 +23,8 @@ class Shop extends Model
         return self::where('slug', $slug)->first();
     }
 
-    public function links()
+    public function inShopProducts()
     {
-        return $this->hasMany(Link::class);
+        return $this->hasMany(InShopProduct::class);
     }
 }
