@@ -6,15 +6,17 @@ use App\Exceptions\AvailableNotFoundException;
 use App\Exceptions\NameNotFoundException;
 use App\Exceptions\PriceNotFoundException;
 use App\Exceptions\ProductNotFoundException;
-use App\Interfaces\Shop;
+use App\Exceptions\UnknownShopException;
+use App\Interfaces\Shopable;
+use App\Models\Shop;
 use App\Traits\Parser;
 
-class LDLC implements Shop
+class LDLC implements Shopable
 {
     use Parser;
 
-    /** @var string $baseUrl */
-    protected $baseUrl = 'https://www.ldlc.com/';
+    /** @var \App\Models\Shop $shop */
+    protected $shop;
 
     /** @var string $path */
     protected $path;
@@ -24,8 +26,12 @@ class LDLC implements Shop
 
     private function __construct(string $path)
     {
+        $this->shop = Shop::bySlug('ldlc');
+        if ($this->shop === null) {
+            throw new UnknownShopException('This shop ' . __CLASS__ . ' is unknown.');
+        }
         $this->path = $path;
-        $this->crawler = $this->parse($this->baseUrl . $path);
+        $this->crawler = $this->parse($this->productPageUrl());
         $this->check();
     }
 
@@ -72,6 +78,6 @@ class LDLC implements Shop
 
     public function productPageUrl():string
     {
-        return $this->baseUrl . $this->path;
+        return $this->shop->base_url . $this->path;
     }
 }

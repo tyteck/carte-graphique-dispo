@@ -13,7 +13,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        (new ChipsetSeeder)->run();
-        (new CardSeeder)->run();
+        $this->call([
+            ChipsetSeeder::class,
+            ShopSeeder::class,
+            CardSeeder::class,
+        ]);
     }
 }

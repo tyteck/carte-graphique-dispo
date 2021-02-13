@@ -4,16 +4,21 @@ namespace Tests\Unit;
 
 use App\Exceptions\ProductNotFoundException;
 use App\Shop\LDLC;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Artisan;
 use Tests\TestCase;
 
 class LDLCTest extends TestCase
 {
+    use RefreshDatabase;
+
     public const ASUS_GEFORCE_ROG_STRIX_RTX_3060_TI = 'fiche/PB00394604.html';
     public const AVAILABLE_PRODUCT = 'fiche/PB00387288.html';
 
     public function setUp():void
     {
         parent::setUp();
+        Artisan::call('db:seed', ['--class' => 'ShopSeeder']);
     }
 
     public function testProductNameIsOk()

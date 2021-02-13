@@ -4,16 +4,21 @@ namespace Tests\Unit;
 
 use App\Exceptions\ProductNotFoundException;
 use App\Shop\Materiel;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Artisan;
 use Tests\TestCase;
 
 class MaterielTest extends TestCase
 {
+    use RefreshDatabase;
+
     public const ASUS_GEFORCE_ROG_STRIX_RTX_3060_TI = 'produit/202011040047.html';
     public const AVAILABLE_PRODUCT = 'produit/201909300069.html';
 
     public function setUp():void
     {
         parent::setUp();
+        Artisan::call('db:seed', ['--class' => 'ShopSeeder']);
     }
 
     public function testProductNameIsOk()

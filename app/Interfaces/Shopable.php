@@ -2,7 +2,7 @@
 
 namespace App\Interfaces;
 
-interface Shop
+interface Shopable
 {
     public function productPrice() : ?string;
 

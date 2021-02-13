@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Card extends Model
+class Link extends Model
 {
     use HasFactory;
 
@@ -16,17 +16,15 @@ class Card extends Model
      *
      * @var array
      */
-    protected $casts = [
-        'available' => 'boolean',
-    ];
+    protected $casts = [];
 
-    public function chipset()
+    public function shop()
     {
-        return $this->belongsTo(Chipset::class);
+        return $this->belongsTo(Shop::class);
     }
 
-    public function links()
+    public function card()
     {
-        return $this->hasMany(Link::class);
+        return $this->belongsTo(Shop::class);
     }
 }

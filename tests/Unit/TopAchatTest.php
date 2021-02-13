@@ -4,16 +4,21 @@ namespace Tests\Unit;
 
 use App\Exceptions\ProductNotFoundException;
 use App\Shop\TopAchat;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Artisan;
 use Tests\TestCase;
 
 class TopAchatTest extends TestCase
 {
+    use RefreshDatabase;
+
     public const ASUS_GEFORCE_ROG_STRIX_RTX_3060_TI = 'pages/detail2_cat_est_micro_puis_rubrique_est_wgfx_pcie_puis_ref_est_in20006243.html';
     public const AVAILABLE_PRODUCT = 'pages/detail2_cat_est_gaming_puis_rubrique_est_wg_pcsou_puis_ref_est_in10114919.html';
 
     public function setUp():void
     {
         parent::setUp();
+        Artisan::call('db:seed', ['--class' => 'ShopSeeder']);
     }
 
     public function testInvalidProductShouldThrow()

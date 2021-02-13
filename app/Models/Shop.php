@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Card extends Model
+class Shop extends Model
 {
     use HasFactory;
 
@@ -16,13 +16,11 @@ class Card extends Model
      *
      * @var array
      */
-    protected $casts = [
-        'available' => 'boolean',
-    ];
+    protected $casts = [];
 
-    public function chipset()
+    public static function bySlug(string $slug): ?Shop
     {
-        return $this->belongsTo(Chipset::class);
+        return self::where('slug', $slug)->first();
     }
 
     public function links()
