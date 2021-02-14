@@ -1,11 +1,11 @@
 version: "3.3"
 services:
-    cgudispo-pmt:
-        container_name: cgudispo
+    gpudispo-pmt:
+        container_name: gpudispo
         build:
             context: .
             dockerfile: .docker/Dockerfile
-        image: cgudispo:1
+        image: gpudispo:1
         restart: always
         expose:
             - "80"

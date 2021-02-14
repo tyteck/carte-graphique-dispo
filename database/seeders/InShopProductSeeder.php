@@ -24,11 +24,18 @@ class InShopProductSeeder extends Seeder
         $topAchatId = Shop::bySlug('top-achat')->id;
 
         /** card by card */
-        $card = Card::bySlug('zotac-gaming-geforce-rtx-3060-ti-twin-edge');
+        /* $card = Card::bySlug('zotac-gaming-geforce-rtx-3060-ti-twin-edge');
         $data = [
             ['shop_id' => $ldlcId, 'card_id' => $card->id, 'in_shop_product_id' => 'PB00394053', ],
             ['shop_id' => $materielId, 'card_id' => $card->id, 'in_shop_product_id' => '202011060034', ],
             ['shop_id' => $topAchatId, 'card_id' => $card->id, 'in_shop_product_id' => '20006277', ],
+        ]; */
+
+        $card = Card::bySlug('msi-geforce-rtx-3060-ti-ventus-2x-oc');
+        $data = [
+            ['shop_id' => $ldlcId, 'card_id' => $card->id, 'in_shop_product_id' => 'PB00395231', ],
+            ['shop_id' => $materielId, 'card_id' => $card->id, 'in_shop_product_id' => '202012020119', ],
+            ['shop_id' => $topAchatId, 'card_id' => $card->id, 'in_shop_product_id' => '20006745', ],
         ];
 
         $data = array_map(

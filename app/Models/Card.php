@@ -25,7 +25,7 @@ class Card extends Model
         return $this->belongsTo(Chipset::class);
     }
 
-    public function InShopProduct()
+    public function inShops()
     {
         return $this->hasMany(InShopProduct::class);
     }
