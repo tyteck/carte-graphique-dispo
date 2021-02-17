@@ -25,7 +25,11 @@ class UpdateCard extends Command
     protected $description = 'Command description';
 
     /** @var array $shopMap */
-    protected $shopMap;
+    protected $shopMap = [
+        'ldlc' => \App\Shop\LDLC::class,
+        'materielnet' => \App\Shop\Materiel::class,
+        'top-achat' => \App\Shop\TopAchat::class,
+    ];
 
     /**
      * Create a new command instance.
@@ -34,11 +38,6 @@ class UpdateCard extends Command
      */
     public function __construct()
     {
-        $this->shopMap = [
-            'ldlc' => LDLC::class,
-            'materielnet' => Materiel::class,
-            'top-achat' => TopAchat::class,
-        ];
         parent::__construct();
     }
 
@@ -52,9 +51,20 @@ class UpdateCard extends Command
         /** for this cgu */
         $inShops = Card::bySlug('msi-geforce-rtx-3060-ti-ventus-2x-oc')->inShops;
 
+        /** in all shops */
         foreach ($inShops as $productInShop) {
-            //dump($productInShop->shop);
-            $foo = new $this->shopMap[];
+            /** get shop slug */
+            $shop = $productInShop->shop;
+
+            /** with slug which crawler to be used */
+            $class = $this->shopMap[$shop->slug];
+
+            /** @var \App\Interfaces\Shopable $shopCrawler  */
+            $shopCrawler = $class::get($productInShop->in_shop_product_id);
+
+            if ($shopCrawler->productAvailable() == true) {
+                
+            }
             /** get availability */
             //LDLC::get($ca)->productAvailable();
         }
