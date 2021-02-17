@@ -2,11 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Mail\CardAvailable;
 use App\Models\Card;
-use App\Shop\LDLC;
-use App\Shop\Materiel;
-use App\Shop\TopAchat;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Mail;
 
 class UpdateCard extends Command
 {
@@ -62,9 +61,10 @@ class UpdateCard extends Command
             /** @var \App\Interfaces\Shopable $shopCrawler  */
             $shopCrawler = $class::get($productInShop->in_shop_product_id);
 
-            if ($shopCrawler->productAvailable() == true) {
-                
-            }
+            //if ($shopCrawler->productAvailable() == true) {
+            dump($product);
+            Mail::to('frederick@tyteca.net')->send(new CardAvailable($productInShop));
+            //}
             /** get availability */
             //LDLC::get($ca)->productAvailable();
         }

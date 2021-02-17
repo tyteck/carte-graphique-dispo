@@ -5,9 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class InShopProduct extends Model
+class ProductInShop extends Model
 {
     use HasFactory;
+
+    /** @var array $shopMap */
+    protected $shopMap = [
+        'ldlc' => \App\Shop\LDLC::class,
+        'materielnet' => \App\Shop\Materiel::class,
+        'top-achat' => \App\Shop\TopAchat::class,
+    ];
 
     protected $guarded = [];
 
@@ -26,5 +33,10 @@ class InShopProduct extends Model
     public function card()
     {
         return $this->belongsTo(Shop::class);
+    }
+
+    public function getCrawler()
+    {
+        1;
     }
 }

@@ -25,6 +25,6 @@ class Shop extends Model
 
     public function inShopProducts()
     {
-        return $this->hasMany(InShopProduct::class);
+        return $this->hasMany(ProductInShop::class);
     }
 }

@@ -3,11 +3,11 @@
 namespace Database\Seeders;
 
 use App\Models\Card;
-use App\Models\InShopProduct;
+use App\Models\ProductInShop;
 use App\Models\Shop;
 use Illuminate\Database\Seeder;
 
-class InShopProductSeeder extends Seeder
+class ProductInShopsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -48,6 +48,6 @@ class InShopProductSeeder extends Seeder
             },
             $data
         );
-        InShopProduct::insert($data);
+        ProductInShop::insert($data);
     }
 }

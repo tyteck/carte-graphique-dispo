@@ -37,9 +37,11 @@ class TopAchatTest extends TestCase
 
     public function testProductPriceIsOk()
     {
+        $factory = TopAchat::get(self::ASUS_GEFORCE_ROG_STRIX_RTX_3060_TI);
         $this->assertEquals(
-            '699.99',
-            TopAchat::get(self::ASUS_GEFORCE_ROG_STRIX_RTX_3060_TI)->productPrice()
+            '799.99',
+            $factory->productPrice(),
+            "Price for {$factory->productPageUrl()} has changed ?"
         );
     }
 

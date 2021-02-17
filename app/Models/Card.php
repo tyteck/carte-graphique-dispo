@@ -27,7 +27,7 @@ class Card extends Model
 
     public function inShops()
     {
-        return $this->hasMany(InShopProduct::class);
+        return $this->hasMany(ProductInShop::class);
     }
 
     public static function bySlug(string $slug): ?Card

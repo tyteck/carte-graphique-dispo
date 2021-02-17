@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Shop;
+use App\Models\ProductInShop;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class LinkFactory extends Factory
+class ProductInShopFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Shop::class;
+    protected $model = ProductInShop::class;
 
     /**
      * Define the model's default state.
@@ -22,7 +22,7 @@ class LinkFactory extends Factory
     public function definition()
     {
         return [
-            'url' => $attributes['url'] ?? '',
+            'in_shop_product_id' => $attributes['in_shop_product_id'] ?? '',
         ];
     }
 }
