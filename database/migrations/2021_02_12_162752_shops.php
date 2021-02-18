@@ -18,6 +18,7 @@ class Shops extends Migration
             $table->string('name');
             $table->string('slug');
             $table->string('base_url');
+            $table->boolean('active');
             $table->timestamps();
         });
     }

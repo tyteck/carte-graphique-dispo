@@ -25,13 +25,47 @@ class Card extends Model
         return $this->belongsTo(Chipset::class);
     }
 
-    public function inShops()
+    public function shops()
     {
-        return $this->hasMany(ProductInShop::class);
+        return $this->belongsToMany(Shop::class)->withPivot('product_id');
     }
 
     public static function bySlug(string $slug): ?Card
     {
         return self::where('slug', $slug)->first();
+    }
+
+    public function addItInShopWithId(Shop $shop, string $productId)
+    {
+        $this->shops()->attach($shop, ['product_id' => $productId]);
+    }
+
+    public function isCardInShop(Shop $shop)
+    {
+        return $this->whereHas('shops', function ($query) use ($shop) {
+            return $query->where('shops.id', '=', $shop->id);
+        })->count() > 0;
+    }
+
+    public function productIdInShop(Shop $shop)
+    {
+        $result = $this->shops->filter(function ($item) use ($shop) {
+            return $item->id === $shop->id;
+        });
+        if (!$result->count()) {
+            return null;
+        }
+
+        return $result->first()->pivot->product_id;
+    }
+
+    public function productUrlForShop(Shop $shop)
+    {
+        $productId = $this->productIdInShop($shop);
+        if ($productId === null) {
+            return null;
+        }
+
+        return $shop->productPageUrl($productId);
     }
 }

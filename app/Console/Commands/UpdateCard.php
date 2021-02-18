@@ -48,22 +48,19 @@ class UpdateCard extends Command
     public function handle()
     {
         /** for this cgu */
-        $inShops = Card::bySlug('msi-geforce-rtx-3060-ti-ventus-2x-oc')->inShops;
-
+        $card = Card::bySlug('msi-geforce-rtx-3060-ti-ventus-2x-oc');
+        $shops = $card->shops()->withPivot('product_id')->get();
         /** in all shops */
-        foreach ($inShops as $productInShop) {
-            /** get shop slug */
-            $shop = $productInShop->shop;
-
+        foreach ($shops as $shop) {
             /** with slug which crawler to be used */
             $class = $this->shopMap[$shop->slug];
 
             /** @var \App\Interfaces\Shopable $shopCrawler  */
-            $shopCrawler = $class::get($productInShop->in_shop_product_id);
+            $shopCrawler = $class::get($shop->pivot->product_id);
 
             //if ($shopCrawler->productAvailable() == true) {
-            dump($product);
-            Mail::to('frederick@tyteca.net')->send(new CardAvailable($productInShop));
+
+            Mail::to('frederick@tyteca.net')->send(new CardAvailable($card, $shop));
             //}
             /** get availability */
             //LDLC::get($ca)->productAvailable();

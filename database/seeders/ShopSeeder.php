@@ -16,12 +16,12 @@ class ShopSeeder extends Seeder
     public function run()
     {
         $data = [
-            ['name' => 'LDLC', 'base_url' => 'https://www.ldlc.com/'],
-            ['name' => 'Materiel.net', 'base_url' => 'https://www.materiel.net/'],
-            ['name' => 'Top Achat', 'base_url' => 'https://www.topachat.com/'],
-            ['name' => 'Gros Bill', 'base_url' => 'https://www.grosbill.com/'],
-            ['name' => 'Fnac', 'base_url' => 'https://www.fnac.com/'],
-            ['name' => 'Darty', 'base_url' => 'https://www.darty.com/'],
+            ['name' => 'LDLC', 'base_url' => 'https://www.ldlc.com/fiche/{{PRODUCT_ID}}.html', 'active' => 1],
+            ['name' => 'Materiel.net', 'base_url' => 'https://www.materiel.net/produit/{{PRODUCT_ID}}.html', 'active' => 1],
+            ['name' => 'Top Achat', 'base_url' => 'https://www.topachat.com/pages/detail2_cat_est_micro_puis_rubrique_est_wgfx_pcie_puis_ref_est_in{{PRODUCT_ID}}.html', 'active' => 1],
+            ['name' => 'Gros Bill', 'base_url' => 'https://www.grosbill.com/', 'active' => 0],
+            ['name' => 'Fnac', 'base_url' => 'https://www.fnac.com/Carte-graphique-Gaming/{{PRODUCT_ID}}/', 'active' => 0],
+            ['name' => 'Darty', 'base_url' => 'https://www.darty.com/', 'active' => 0],
         ];
 
         $index = 1;

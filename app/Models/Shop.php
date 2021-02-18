@@ -23,8 +23,20 @@ class Shop extends Model
         return self::where('slug', $slug)->first();
     }
 
-    public function inShopProducts()
+    public function cards()
     {
-        return $this->hasMany(ProductInShop::class);
+        return $this->belongsToMany(Card::class);
+    }
+
+    public function addCardInShop(Card $card, string $productId)
+    {
+        $this->cards()->attach($card, [
+            'product_id' => $productId,
+        ]);
+    }
+
+    public function productPageUrl(string $productId)
+    {
+        return preg_replace('#{{PRODUCT_ID}}#', $productId, $this->base_url);
     }
 }

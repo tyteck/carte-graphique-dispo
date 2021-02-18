@@ -2,7 +2,8 @@
 
 namespace App\Mail;
 
-use App\Models\ProductInShop;
+use App\Models\Card;
+use App\Models\Shop;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -11,17 +12,21 @@ class CardAvailable extends Mailable
 {
     use Queueable, SerializesModels;
 
-    /** @var \App\Models\ProductInShop */
-    public $productInShop;
+    /** @var \App\Models\Card $card */
+    public $card;
+
+    /** @var \App\Models\Shop $shop */
+    public $shop;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(ProductInShop $productInShop)
+    public function __construct(Card $card, Shop $shop)
     {
-        $this->productInShop = $productInShop;
+        $this->card = $card;
+        $this->shop = $shop;
     }
 
     /**
@@ -31,6 +36,7 @@ class CardAvailable extends Mailable
      */
     public function build()
     {
+        dd($this->card, $this->shop, 'foo');
         return $this->view('emails.card_available');
     }
 }
