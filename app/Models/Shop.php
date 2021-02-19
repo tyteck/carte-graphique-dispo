@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use InvalidArgumentException;
+use LogicException;
 
 class Shop extends Model
 {
@@ -37,6 +39,13 @@ class Shop extends Model
 
     public function productPageUrl(string $productId)
     {
-        return preg_replace('#{{PRODUCT_ID}}#', $productId, $this->base_url);
+        if (!strlen($productId)) {
+            throw new InvalidArgumentException('product_id is empty.');
+        }
+        $result = preg_replace('#{{PRODUCT_ID}}#', $productId, $this->product_page_url, 1, $found);
+        if (!$found > 0) {
+            throw new LogicException("Column product_page_url for shop {{$this->name}} is invalid.");
+        }
+        return $result;
     }
 }

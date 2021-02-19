@@ -39,7 +39,7 @@ class LDLCTest extends TestCase
     {
         $factory = LDLC::get(self::ASUS_GEFORCE_ROG_STRIX_RTX_3060_TI);
         $this->assertEquals(
-            '829.95',
+            '829.96',
             $factory->productPrice(),
             "Price for {$factory->productPageUrl()} has changed ?"
         );
@@ -49,13 +49,5 @@ class LDLCTest extends TestCase
     {
         $this->assertFalse(LDLC::get(self::ASUS_GEFORCE_ROG_STRIX_RTX_3060_TI)->productAvailable());
         $this->assertTrue(LDLC::get(self::AVAILABLE_PRODUCT)->productAvailable());
-    }
-
-    public function testProductPageUrl()
-    {
-        $this->assertEquals(
-            'https://www.ldlc.com/fiche/' . self::ASUS_GEFORCE_ROG_STRIX_RTX_3060_TI . '.html',
-            LDLC::get(self::ASUS_GEFORCE_ROG_STRIX_RTX_3060_TI)->productPageUrl()
-        );
     }
 }

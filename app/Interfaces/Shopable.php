@@ -8,7 +8,5 @@ interface Shopable
 
     public function productName() : ?string;
 
-    public function productPageUrl() : ?string;
-
     public function productAvailable() : bool;
 }

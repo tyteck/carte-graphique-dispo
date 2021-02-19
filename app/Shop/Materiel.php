@@ -68,6 +68,6 @@ class Materiel implements Shopable
 
     public function productPageUrl():string
     {
-        return $this->shop->base_url . 'produit/' . $this->productId . '.html';
+        return $this->shop->productPageUrl($this->productId);
     }
 }

@@ -24,7 +24,7 @@ class ShopFactory extends Factory
         return [
             'name' => $attributes['name'] ?? $this->faker->name,
             'slug' => $attributes['available'] ?? false,
-            'base_url' => $attributes['base_url'] ?? '',
+            'product_page_url' => $attributes['product_page_url'] ?? '',
             'active' => $attributes['active'] ?? true,
         ];
     }

@@ -39,7 +39,7 @@ class MaterielTest extends TestCase
     {
         $factory = Materiel::get(self::ASUS_GEFORCE_ROG_STRIX_RTX_3060_TI);
         $this->assertEquals(
-            '829.95',
+            '829.96',
             $factory->productPrice(),
             "Price for {$factory->productPageUrl()} has changed ?"
         );
@@ -49,13 +49,5 @@ class MaterielTest extends TestCase
     {
         $this->assertFalse(Materiel::get(self::ASUS_GEFORCE_ROG_STRIX_RTX_3060_TI)->productAvailable());
         $this->assertTrue(Materiel::get(self::AVAILABLE_PRODUCT)->productAvailable());
-    }
-
-    public function testProductPageUrl()
-    {
-        $this->assertEquals(
-            'https://www.materiel.net/produit/' . self::ASUS_GEFORCE_ROG_STRIX_RTX_3060_TI . '.html',
-            Materiel::get(self::ASUS_GEFORCE_ROG_STRIX_RTX_3060_TI)->productPageUrl()
-        );
     }
 }

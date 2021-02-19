@@ -50,12 +50,4 @@ class TopAchatTest extends TestCase
         $this->assertFalse(TopAchat::get(self::ASUS_GEFORCE_ROG_STRIX_RTX_3060_TI)->productAvailable());
         $this->assertTrue(TopAchat::get(self::AVAILABLE_PRODUCT)->productAvailable());
     }
-
-    public function testProductPageUrl()
-    {
-        $this->assertEquals(
-            'https://www.topachat.com/pages/detail2_cat_est_micro_puis_rubrique_est_wgfx_pcie_puis_ref_est_in' . self::ASUS_GEFORCE_ROG_STRIX_RTX_3060_TI . '.html',
-            TopAchat::get(self::ASUS_GEFORCE_ROG_STRIX_RTX_3060_TI)->productPageUrl()
-        );
-    }
 }

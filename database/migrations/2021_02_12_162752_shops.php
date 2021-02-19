@@ -17,7 +17,7 @@ class Shops extends Migration
             $table->smallIncrements('id');
             $table->string('name');
             $table->string('slug');
-            $table->string('base_url');
+            $table->string('product_page_url');
             $table->boolean('active');
             $table->timestamps();
         });

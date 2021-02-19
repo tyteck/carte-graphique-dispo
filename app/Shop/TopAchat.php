@@ -69,6 +69,6 @@ class TopAchat implements Shopable
 
     public function productPageUrl():string
     {
-        return $this->shop->base_url . 'pages/detail2_cat_est_micro_puis_rubrique_est_wgfx_pcie_puis_ref_est_in' . $this->productId . '.html';
+        return $this->shop->productPageUrl($this->productId);
     }
 }

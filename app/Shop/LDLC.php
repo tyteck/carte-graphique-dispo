@@ -78,6 +78,6 @@ class LDLC implements Shopable
 
     public function productPageUrl():string
     {
-        return $this->shop->base_url . 'fiche/' . $this->productId . '.html';
+        return $this->shop->productPageUrl($this->productId);
     }
 }

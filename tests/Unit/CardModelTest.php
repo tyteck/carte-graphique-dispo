@@ -24,7 +24,12 @@ class CardModelTest extends TestCase
         $this->card = Card::factory()
             ->for(Chipset::factory())
             ->create(['slug' => 'test']);
-        $this->shop = Shop::factory()->create(['slug' => 'ldlc']);
+        $this->shop = Shop::factory()->create(
+            [
+                'slug' => 'ldlc',
+                'product_page_url' => 'https://www.ldlc.com/fiche/{{PRODUCT_ID}}.html',
+            ]
+        );
     }
 
     public function testingBySlug()

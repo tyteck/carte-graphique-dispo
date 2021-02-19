@@ -62,6 +62,7 @@ class Card extends Model
     public function productUrlForShop(Shop $shop)
     {
         $productId = $this->productIdInShop($shop);
+
         if ($productId === null) {
             return null;
         }
