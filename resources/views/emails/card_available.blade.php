@@ -2,5 +2,5 @@
 <div>
     {{ $card->name }}
     {{ $shop->name }}
-    url : 
+    url : {{ $card->productUrlForShop($shop) }}
 </div>
