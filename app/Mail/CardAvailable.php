@@ -36,7 +36,6 @@ class CardAvailable extends Mailable
      */
     public function build()
     {
-        dd($this->card, $this->shop, 'foo');
         return $this->view('emails.card_available');
     }
 }

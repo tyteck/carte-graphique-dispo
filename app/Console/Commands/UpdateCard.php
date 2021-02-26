@@ -49,7 +49,7 @@ class UpdateCard extends Command
     {
         /** for this cgu */
         $card = Card::bySlug('msi-geforce-rtx-3060-ti-ventus-2x-oc');
-        $shops = $card->shops()->withPivot('product_id')->get();
+        $shops = $card->shops()->get();
         /** in all shops */
         foreach ($shops as $shop) {
             /** with slug which crawler to be used */
