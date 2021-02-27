@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Card;
 use App\Sms\SendSms;
+use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 
@@ -50,6 +51,9 @@ class UpdateCard extends Command
         /** for this cgu */
         $card = Card::bySlug('msi-geforce-rtx-3060-ti-ventus-2x-oc');
         $shops = $card->shops()->get();
+        if (!$shops->count()) {
+            throw new Exception('No shop registered ? Really !!');
+        }
         /** in all shops */
         foreach ($shops as $shop) {
             /** with slug which crawler to be used */
@@ -74,7 +78,7 @@ class UpdateCard extends Command
                 Log::notice($message);
             }
         }
-
+        Log::notice("{$this->signature} has finished.");
         return 0;
     }
 }
