@@ -59,7 +59,8 @@ class UpdateCard extends Command
             $shopCrawler = $class::get($shop->pivot->product_id);
 
             if ($shopCrawler->productAvailable() == true) {
-                Mail::to('frederick@tyteca.net')->send(new CardAvailable($card, $shop));
+                
+                
             }
         }
 
