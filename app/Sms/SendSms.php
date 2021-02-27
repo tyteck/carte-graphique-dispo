@@ -28,7 +28,6 @@ class SendSms
         );
         $this->client = new Client($this->basic);
         $this->brandName = config('app.name');
-        dd($this);
     }
 
     public static function init(...$params)
