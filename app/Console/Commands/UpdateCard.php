@@ -58,16 +58,10 @@ class UpdateCard extends Command
             /** @var \App\Interfaces\Shopable $shopCrawler  */
             $shopCrawler = $class::get($shop->pivot->product_id);
 
-            //if ($shopCrawler->productAvailable() == true) {
-
-            Mail::to('frederick@tyteca.net')->send(new CardAvailable($card, $shop));
-            //}
-            /** get availability */
-            //LDLC::get($ca)->productAvailable();
+            if ($shopCrawler->productAvailable() == true) {
+                Mail::to('frederick@tyteca.net')->send(new CardAvailable($card, $shop));
+            }
         }
-
-        /* Materiel::get(self::AVAILABLE_PRODUCT)->productAvailable();
-        TopAchat::get(self::AVAILABLE_PRODUCT)->productAvailable(); */
 
         return 0;
     }
