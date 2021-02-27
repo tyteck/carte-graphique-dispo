@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands;
 
-use App\Mail\CardAvailable;
 use App\Models\Card;
+use App\Sms\SendSms;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 
 class UpdateCard extends Command
 {
@@ -59,8 +59,19 @@ class UpdateCard extends Command
             $shopCrawler = $class::get($shop->pivot->product_id);
 
             if ($shopCrawler->productAvailable() == true) {
-                
-                
+                $smsBody = "Ta carte graphique est dispo ici {$card->productUrlForShop($shop)} maintenant !";
+                $result = SendSms::init()
+                    ->toRecipient(env('SMS_TO'))
+                    ->send($smsBody);
+                if ($result === false) {
+                    $message = 'Sending sms has failed';
+                    $this->error($message, 'v');
+                    Log::error($message);
+                    return 1;
+                }
+                $message = 'Sms sent successfully to ' . env('SMS_TO');
+                $this->info($message, 'v');
+                Log::notice($message);
             }
         }
 
