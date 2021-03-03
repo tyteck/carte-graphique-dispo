@@ -31,5 +31,10 @@ class CardShopSeeder extends Seeder
         $card->addItInShopWithId($ldlc, 'PB00395231');
         $card->addItInShopWithId($materiel, '202012020119');
         $card->addItInShopWithId($topAchat, '20006745');
+
+        $card = Card::bySlug('msi-geforce-rtx-3060-ti-gaming-x-trio');
+        $card->addItInShopWithId($ldlc, 'PB00394151');
+        $card->addItInShopWithId($materiel, '202011200137');
+        $card->addItInShopWithId($topAchat, '20006537');
     }
 }
