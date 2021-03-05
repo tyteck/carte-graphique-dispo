@@ -8,7 +8,7 @@ use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 
-class UpdateMyCard extends Command
+class UpdateMyCards extends Command
 {
     /**
      * The name and signature of the console command.

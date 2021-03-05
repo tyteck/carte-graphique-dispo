@@ -24,11 +24,11 @@ class UpdateCard extends Command
      */
     protected $description = 'Command description';
 
-    /** @var array $shopMap */
-    protected $shopMap = [
-        'ldlc' => \App\Shop\LDLC::class,
-        'materielnet' => \App\Shop\Materiel::class,
-        'top-achat' => \App\Shop\TopAchat::class,
+    /** @var array $shopSlugMap */
+    protected $shopSlugMap = [
+        'ldlc' => \App\Crawlers\LDLC::class,
+        'materielnet' => \App\Crawlers\Materiel::class,
+        'top-achat' => \App\Crawlers\TopAchat::class,
     ];
 
     /**
@@ -57,7 +57,7 @@ class UpdateCard extends Command
         /** in all shops */
         foreach ($shops as $shop) {
             /** with slug which crawler to be used */
-            $class = $this->shopMap[$shop->slug];
+            $class = $this->shopSlugMap[$shop->slug];
 
             /** @var \App\Interfaces\Shopable $shopCrawler  */
             $shopCrawler = $class::get($shop->pivot->product_id);
@@ -78,7 +78,9 @@ class UpdateCard extends Command
                 Log::notice($message);
             }
         }
-        Log::notice("{$this->signature} has finished.");
+        $message = "{$this->signature} has finished successfully.";
+        Log::notice($message);
+        $this->info($message);
         return 0;
     }
 }

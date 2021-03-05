@@ -3,7 +3,7 @@
 namespace Tests\Unit;
 
 use App\Exceptions\ProductNotFoundException;
-use App\Shop\LDLC;
+use App\Crawlers\LDLC;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
 use Tests\TestCase;

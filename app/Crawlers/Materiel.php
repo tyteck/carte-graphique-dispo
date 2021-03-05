@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shop;
+namespace App\Crawlers;
 
 use App\Exceptions\PriceNotFoundException;
 use App\Exceptions\ProductNotFoundException;

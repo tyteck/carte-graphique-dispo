@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Shop;
+namespace App\Crawlers;
 
+use App\Exceptions\AvailableNotFoundException;
+use App\Exceptions\NameNotFoundException;
 use App\Exceptions\PriceNotFoundException;
 use App\Exceptions\ProductNotFoundException;
 use App\Exceptions\UnknownShopException;
@@ -9,7 +11,7 @@ use App\Interfaces\Shopable;
 use App\Models\Shop;
 use App\Traits\Parser;
 
-class TopAchat implements Shopable
+class LDLC implements Shopable
 {
     use Parser;
 
@@ -24,7 +26,7 @@ class TopAchat implements Shopable
 
     private function __construct(string $productId)
     {
-        $this->shop = Shop::bySlug('top-achat');
+        $this->shop = Shop::bySlug('ldlc');
         if ($this->shop === null) {
             throw new UnknownShopException('This shop ' . __CLASS__ . ' is unknown.');
         }
@@ -40,7 +42,7 @@ class TopAchat implements Shopable
 
     public function check()
     {
-        if (!$this->crawler->evaluate('//body[@class="detail2"]')->count()) {
+        if ($this->crawler->evaluate('//div[@class="main p404"]')->count() > 0) {
             throw new ProductNotFoundException(__CLASS__ . " Product on this page {$this->productPageUrl()} does not exist.");
         }
         return $this;
@@ -48,23 +50,30 @@ class TopAchat implements Shopable
 
     public function productPrice() : ?string
     {
-        $result = $this->crawler->evaluate('//section[@id="panier"]/div[@class="prix"]/div[@class="eproduct NOR"]/span[1]');
+        $result = $this->crawler->evaluate('//aside/div[@class="price"]/div');
         if ($result->count()) {
-            if (preg_match('/(?P<price>[0-9.]*)/', $result->text(), $matches)) {
-                return($matches['price']);
-            }
+            return str_replace('€', '.', $result->text());
         }
         throw new PriceNotFoundException(__CLASS__ . " Cannot found price for {$this->productPageUrl()}");
     }
 
     public function productName() : ?string
     {
-        return $this->crawler->evaluate('//div[@class="libelle"]/h1[@class="fn"]')->text();
+        $result = $this->crawler->evaluate('//h1[@class="title-1"]');
+        if ($result->count()) {
+            return  $result->text();
+        }
+        throw new NameNotFoundException(__CLASS__ . " Cannot found name for {$this->productPageUrl()}");
     }
 
     public function productAvailable() : bool
     {
-        return $this->crawler->evaluate('//section[@id="panier"][@class="cart-box en-stock"]')->count() > 0;
+        $result = $this->crawler->evaluate('//aside/div[@id="product-page-stock"]/div[@class="website"]/div[@class="content"]/div[1]/span[1]');
+        if ($result->count()) {
+            $result = strtolower($result->text());
+            return $result === 'en stock';
+        }
+        throw new AvailableNotFoundException(__CLASS__ . " Cannot found availability for {$this->productPageUrl()}");
     }
 
     public function productPageUrl():string
