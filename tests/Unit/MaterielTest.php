@@ -39,7 +39,7 @@ class MaterielTest extends TestCase
     {
         $factory = Materiel::get(self::ASUS_GEFORCE_ROG_STRIX_RTX_3060_TI);
         $this->assertEquals(
-            '829.96',
+            '849.95',
             $factory->productPrice(),
             "Price for {$factory->productPageUrl()} has changed ?"
         );

@@ -2,8 +2,8 @@
 
 namespace Tests\Unit;
 
+use App\Crawlers\TopAchat;
 use App\Exceptions\ProductNotFoundException;
-use App\Shop\TopAchat;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
 use Tests\TestCase;
@@ -39,7 +39,7 @@ class TopAchatTest extends TestCase
     {
         $factory = TopAchat::get(self::ASUS_GEFORCE_ROG_STRIX_RTX_3060_TI);
         $this->assertEquals(
-            '799.99',
+            '829.99',
             $factory->productPrice(),
             "Price for {$factory->productPageUrl()} has changed ?"
         );

@@ -24,7 +24,7 @@ class LDLCTest extends TestCase
     public function testProductNameIsOk()
     {
         $this->assertEquals(
-            'ASUS GeForce ROG STRIX RTX 3060 Ti O8G GAMING',
+            'ASUS ROG STRIX GeForce RTX 3060 Ti O8G GAMING',
             LDLC::get(self::ASUS_GEFORCE_ROG_STRIX_RTX_3060_TI)->productName()
         );
     }
@@ -39,7 +39,7 @@ class LDLCTest extends TestCase
     {
         $factory = LDLC::get(self::ASUS_GEFORCE_ROG_STRIX_RTX_3060_TI);
         $this->assertEquals(
-            '829.96',
+            '849.95',
             $factory->productPrice(),
             "Price for {$factory->productPageUrl()} has changed ?"
         );

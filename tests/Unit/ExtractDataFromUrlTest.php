@@ -7,21 +7,18 @@ use App\Helpers\ExtractDataFromUrl;
 use App\Models\Card;
 use App\Models\Chipset;
 use App\Models\Shop;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use InvalidArgumentException;
 use Tests\TestCase;
 
 class ExtractDataFromUrlTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function setUp() :void
     {
         parent::setUp();
-        $this->shop = Shop::factory()->create(
-            [
-                'domain_name' => 'www.ldlc.com',
-                'product_page_url' => 'fiche/{{PRODUCT_ID}}.html',
-                'slug' => 'ldlc'
-            ]
-        );
+        $this->shop = $this->createLdlc();
     }
 
     /** @test */
@@ -42,6 +39,7 @@ class ExtractDataFromUrlTest extends TestCase
     public function valid_shop_is_ok()
     {
         $factory = ExtractDataFromUrl::from('https://www.ldlc.com/fiche/PB00385046.html?I-dont-care=about-the-query');
+
         $this->assertNotNull(
             $factory->shop(),
             'We should have identified LDLC shop from this url.'
@@ -61,14 +59,20 @@ class ExtractDataFromUrlTest extends TestCase
     }
 
     /** @test */
-    public function valid_card_is_ok()
+    public function known_card_is_ok()
     {
-        $card = Card::factory()->for(Chipset::factory())->create(['slug' => 'test']);
+        /** creating a card for the need of the test with some productId */
+        $card = $this->createCardWithSlug('test');
         $productId = 'PB00394053';
         $card->addItInShopWithId($this->shop, $productId);
+
         $factory = ExtractDataFromUrl::from("https://www.ldlc.com/fiche/{$productId}.html?I-dont-care=about-the-query");
         $this->assertNotNull($factory->card());
         $this->assertInstanceOf(Card::class, $factory->card());
-        $this->markTestIncomplete('➕ to do ➕');
+        $this->assertEquals(
+            $card->id,
+            $factory->card()->id,
+            "We were expecting Card {$card->id} and we obtained something else."
+        );
     }
 }

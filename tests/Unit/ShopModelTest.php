@@ -20,13 +20,7 @@ class ShopModelTest extends TestCase
     public function setUp():void
     {
         parent::setUp();
-        $this->shop = Shop::factory()->create(
-            [
-                'domain_name' => 'www.ldlc.com',
-                'product_page_url' => 'fiche/{{PRODUCT_ID}}.html',
-                'slug' => 'ldlc'
-            ]
-        );
+        $this->shop = $this->createLdlc();
     }
 
     /** @test */
@@ -83,7 +77,7 @@ class ShopModelTest extends TestCase
         $expectedProductId = 'PB00394053';
 
         /** creating a card */
-        $card = Card::factory()->for(Chipset::factory())->create(['slug' => 'test']);
+        $card = $this->createCardWithSlug('test');
 
         /** adding a card to some shop (not the one we are using) */
         $card->addItInShopWithId(Shop::factory()->create(), $expectedProductId);
@@ -108,7 +102,7 @@ class ShopModelTest extends TestCase
         $expectedProductId = 'PB00394053';
 
         /** creating a card */
-        $card = Card::factory()->for(Chipset::factory())->create(['slug' => 'test']);
+        $card = $this->createCardWithSlug('test');
 
         /** adding a card to some shop (not the good one) */
         $card->addItInShopWithId(Shop::factory()->create(), $expectedProductId);

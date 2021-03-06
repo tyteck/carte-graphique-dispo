@@ -3,8 +3,6 @@
 namespace Tests\Unit;
 
 use App\Models\Card;
-use App\Models\Chipset;
-use App\Models\Shop;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -21,15 +19,8 @@ class CardModelTest extends TestCase
     public function setUp():void
     {
         parent::setUp();
-        $this->card = Card::factory()
-            ->for(Chipset::factory())
-            ->create(['slug' => 'test']);
-        $this->shop = Shop::factory()->create(
-            [
-                'slug' => 'ldlc',
-                'product_page_url' => 'https://www.ldlc.com/fiche/{{PRODUCT_ID}}.html',
-            ]
-        );
+        $this->card = $this->createCardWithSlug('test');
+        $this->shop = $this->createLdlc();
     }
 
     public function testingBySlug()
