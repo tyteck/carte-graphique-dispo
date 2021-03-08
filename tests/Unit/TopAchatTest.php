@@ -50,4 +50,22 @@ class TopAchatTest extends TestCase
         $this->assertFalse(TopAchat::get(self::ASUS_GEFORCE_ROG_STRIX_RTX_3060_TI)->productAvailable());
         $this->assertTrue(TopAchat::get(self::AVAILABLE_PRODUCT)->productAvailable());
     }
+
+    /** @test */
+    public function product_chipset_is_ok()
+    {
+        $factory = TopAchat::get(self::ASUS_GEFORCE_ROG_STRIX_RTX_3060_TI);
+        $this->assertEquals(
+            'RTX 3060 Ti',
+            $factory->productChipset(),
+            "Chipset for {$factory->productPageUrl()} has changed ?"
+        );
+        /** one RTX 3080 */
+        $factory = TopAchat::get('20005911');
+        $this->assertEquals(
+            'RTX 3080',
+            $factory->productChipset(),
+            "Chipset for {$factory->productPageUrl()} has changed ?"
+        );
+    }
 }

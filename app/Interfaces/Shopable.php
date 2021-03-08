@@ -4,9 +4,15 @@ namespace App\Interfaces;
 
 interface Shopable
 {
-    public function productPrice() : ?string;
+    public static function get(string $productId): self;
 
-    public function productName() : ?string;
+    public function productPrice(): ?string;
 
-    public function productAvailable() : bool;
+    public function productName(): ?string;
+
+    public function productChipset(): ?string;
+
+    public function productAvailable(): bool;
+
+    public function productPageUrl(): string;
 }

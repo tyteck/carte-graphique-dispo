@@ -33,7 +33,7 @@ class TopAchat implements Shopable
         $this->check();
     }
 
-    public static function get(string $productId)
+    public static function get(string $productId): Shopable
     {
         return new static($productId);
     }
@@ -46,7 +46,7 @@ class TopAchat implements Shopable
         return $this;
     }
 
-    public function productPrice() : ?string
+    public function productPrice(): ?string
     {
         $result = $this->crawler->evaluate('//section[@id="panier"]/div[@class="prix"]/div[@class="eproduct NOR"]/span[1]');
         if ($result->count()) {
@@ -57,14 +57,22 @@ class TopAchat implements Shopable
         throw new PriceNotFoundException(__CLASS__ . " Cannot found price for {$this->productPageUrl()}");
     }
 
-    public function productName() : ?string
+    public function productName(): ?string
     {
         return $this->crawler->evaluate('//div[@class="libelle"]/h1[@class="fn"]')->text();
     }
 
-    public function productAvailable() : bool
+    public function productAvailable(): bool
     {
         return $this->crawler->evaluate('//section[@id="panier"][@class="cart-box en-stock"]')->count() > 0;
+    }
+
+    public function productChipset(): string
+    {
+        if (preg_match('/GeForce (?P<chipset>RTX [0-9]{4}( Ti|-Super)?)/', $this->productName(), $matches)) {
+            return $matches['chipset'];
+        }
+        return '';
     }
 
     public function productPageUrl():string

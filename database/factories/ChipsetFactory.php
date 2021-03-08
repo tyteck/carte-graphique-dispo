@@ -22,7 +22,7 @@ class ChipsetFactory extends Factory
      */
     public function definition()
     {
-        $name = $this->faker->name;
+        $name = $attributes['name'] ?? $this->faker->name;
 
         return [
             'name' => $name,

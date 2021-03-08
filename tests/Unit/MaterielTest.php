@@ -45,6 +45,24 @@ class MaterielTest extends TestCase
         );
     }
 
+    /** @test */
+    public function product_chipset_is_ok()
+    {
+        $factory = Materiel::get(self::ASUS_GEFORCE_ROG_STRIX_RTX_3060_TI);
+        $this->assertEquals(
+            'RTX 3060 Ti',
+            $factory->productChipset(),
+            "Chipset for {$factory->productPageUrl()} has changed ?"
+        );
+        /** one RTX 3080 */
+        $factory = Materiel::get('202009080083');
+        $this->assertEquals(
+            'RTX 3080',
+            $factory->productChipset(),
+            "Chipset for {$factory->productPageUrl()} has changed ?"
+        );
+    }
+
     public function testProductAvailableIsOk()
     {
         $this->assertFalse(Materiel::get(self::ASUS_GEFORCE_ROG_STRIX_RTX_3060_TI)->productAvailable());

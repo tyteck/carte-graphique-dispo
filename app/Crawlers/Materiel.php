@@ -33,7 +33,7 @@ class Materiel implements Shopable
         $this->check();
     }
 
-    public static function get(string $productId)
+    public static function get(string $productId): Shopable
     {
         return new static($productId);
     }
@@ -46,7 +46,7 @@ class Materiel implements Shopable
         return $this;
     }
 
-    public function productPrice() : ?string
+    public function productPrice(): ?string
     {
         $result = $this->crawler->evaluate('//span[@class="o-product__price"]');
         if ($result->count()) {
@@ -55,12 +55,20 @@ class Materiel implements Shopable
         throw new PriceNotFoundException(__CLASS__ . " Cannot found price for {$this->productPageUrl()}");
     }
 
-    public function productName() : ?string
+    public function productName(): ?string
     {
         return $this->crawler->evaluate('//div[@class="container"]/div[1]/div[@class="row"]/div[1]/h1')->text();
     }
 
-    public function productAvailable() : bool
+    public function productChipset(): ?string
+    {
+        if (preg_match('/GeForce (?P<chipset>RTX [0-9]{4}( Ti|-Super)?)/', $this->productName(), $matches)) {
+            return $matches['chipset'];
+        }
+        return '';
+    }
+
+    public function productAvailable(): bool
     {
         $result = strtolower($this->crawler->evaluate('//div[@id="js-modal-trigger__availability"]/span[2]')->text());
         return $result === 'en stock';

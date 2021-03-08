@@ -8,6 +8,7 @@ use App\Models\Card;
 use App\Models\Chipset;
 use App\Models\Shop;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Tests\TestCase;
 
@@ -74,5 +75,20 @@ class ExtractDataFromUrlTest extends TestCase
             $factory->card()->id,
             "We were expecting Card {$card->id} and we obtained something else."
         );
+    }
+
+    /** @test */
+    public function unknown_card_should_create_card_with_shop()
+    {
+        $expectedChipset = 'RTX 3060 Ti';
+        $chipset = Chipset::factory()->create(
+            [
+                'name' => $expectedChipset,
+                'slug' => Str::slug($expectedChipset),
+            ]
+        );
+
+        $productId = 'PB00394053';
+        $factory = ExtractDataFromUrl::from("https://www.ldlc.com/fiche/{$productId}.html?I-dont-care=about-the-query");
     }
 }

@@ -45,6 +45,25 @@ class LDLCTest extends TestCase
         );
     }
 
+    /** @test */
+    public function product_chipset_is_ok()
+    {
+        $factory = LDLC::get(self::ASUS_GEFORCE_ROG_STRIX_RTX_3060_TI);
+        $this->assertEquals(
+            'RTX 3060 Ti',
+            $factory->productChipset(),
+            "Chipset for {$factory->productPageUrl()} has changed ?"
+        );
+
+        /** some 3070 */
+        $factory = LDLC::get('PB00385046');
+        $this->assertEquals(
+            'RTX 3070',
+            $factory->productChipset(),
+            "Chipset for {$factory->productPageUrl()} has changed ?"
+        );
+    }
+
     public function testProductAvailableIsOk()
     {
         $this->assertFalse(LDLC::get(self::ASUS_GEFORCE_ROG_STRIX_RTX_3060_TI)->productAvailable());
