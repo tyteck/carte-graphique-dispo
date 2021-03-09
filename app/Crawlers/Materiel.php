@@ -2,6 +2,7 @@
 
 namespace App\Crawlers;
 
+use App\Exceptions\ChipsetNotFoundException;
 use App\Exceptions\PriceNotFoundException;
 use App\Exceptions\ProductNotFoundException;
 use App\Exceptions\UnknownShopException;
@@ -26,7 +27,7 @@ class Materiel implements Shopable
     {
         $this->shop = Shop::bySlug('materielnet');
         if ($this->shop === null) {
-            throw new UnknownShopException('This shop ' . __CLASS__ . ' is unknown.');
+            throw new UnknownShopException('This shop ' . self::class . ' is unknown.');
         }
         $this->productId = $productId;
         $this->crawler = $this->parse($this->productPageUrl());
@@ -41,7 +42,7 @@ class Materiel implements Shopable
     public function check()
     {
         if ($this->crawler->evaluate('//section[@class="c-site__error"]')->count() > 0) {
-            throw new ProductNotFoundException(__CLASS__ . " Product on this page {$this->productPageUrl()} does not exist.");
+            throw new ProductNotFoundException(self::class . " Product on this page {$this->productPageUrl()} does not exist.");
         }
         return $this;
     }
@@ -52,7 +53,7 @@ class Materiel implements Shopable
         if ($result->count()) {
             return str_replace('€', '.', $this->crawler->evaluate('//span[@class="o-product__price"]')->text());
         }
-        throw new PriceNotFoundException(__CLASS__ . " Cannot found price for {$this->productPageUrl()}");
+        throw new PriceNotFoundException(self::class . " Cannot found price for {$this->productPageUrl()}");
     }
 
     public function productName(): ?string
@@ -65,7 +66,7 @@ class Materiel implements Shopable
         if (preg_match('/GeForce (?P<chipset>RTX [0-9]{4}( Ti|-Super)?)/', $this->productName(), $matches)) {
             return $matches['chipset'];
         }
-        return '';
+        throw new ChipsetNotFoundException(self::class . " Cannot found chipset for {$this->productPageUrl()}");
     }
 
     public function productAvailable(): bool

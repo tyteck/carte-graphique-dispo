@@ -9,12 +9,19 @@ use App\Exceptions\OnlineShopUnknownException;
 use App\Models\Card;
 use App\Models\Chipset;
 use App\Models\Shop;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 
-class ExtractDataFromUrl
+class ExtractDataFromUrl implements ShouldQueue
 {
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
     /** @var \App\Models\Shop $shop */
     protected $shop;
 
