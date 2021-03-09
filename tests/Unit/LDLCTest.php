@@ -37,6 +37,7 @@ class LDLCTest extends TestCase
 
     public function testProductPriceIsOk()
     {
+        $this->markTestSkipped('Product prices are changing too frequently 😤 to be tested properly.');
         $factory = LDLC::get(self::ASUS_GEFORCE_ROG_STRIX_RTX_3060_TI);
         $this->assertEquals(
             '849.95',

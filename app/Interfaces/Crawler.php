@@ -2,7 +2,7 @@
 
 namespace App\Interfaces;
 
-interface Shopable
+interface Crawler
 {
     public static function get(string $productId): self;
 

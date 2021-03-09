@@ -2,8 +2,9 @@
 
 namespace Tests\Unit;
 
+use App\Exceptions\ChipsetUnknownException;
 use App\Exceptions\OnlineShopUnknownException;
-use App\Helpers\ExtractDataFromUrl;
+use App\Jobs\ExtractDataFromUrl;
 use App\Models\Card;
 use App\Models\Chipset;
 use App\Models\Shop;
@@ -37,26 +38,25 @@ class ExtractDataFromUrlTest extends TestCase
     }
 
     /** @test */
+    public function unknown_chipset_throw_exception()
+    {
+        /** no chipset in db yet */
+        $this->expectException(ChipsetUnknownException::class);
+        ExtractDataFromUrl::from('https://www.ldlc.com/fiche/PB00385046.html?I-dont-care=about-the-query');
+    }
+
+    /** @test */
     public function valid_shop_is_ok()
     {
-        $factory = ExtractDataFromUrl::from('https://www.ldlc.com/fiche/PB00385046.html?I-dont-care=about-the-query');
+        /** some RTX 3070 card */
+        $productId = 'PB00385046';
+        Chipset::factory()->create(['slug' => 'rtx-3070']);
 
-        $this->assertNotNull(
-            $factory->shop(),
-            'We should have identified LDLC shop from this url.'
-        );
+        $factory = ExtractDataFromUrl::from("https://www.ldlc.com/fiche/{$productId}.html?I-dont-care=about-the-query");
 
-        $this->assertInstanceOf(
-            Shop::class,
-            $factory->shop(),
-            'LDLC should have been identified and class should have return Shop Model.'
-        );
-
-        $this->assertEquals(
-            $this->shop->id,
-            $factory->shop()->id,
-            "We were expecting LDLC {$this->shop->id} and we obtained something else."
-        );
+        $this->assertNotNull($factory->shop(), 'We should have identified LDLC shop from this url.');
+        $this->assertInstanceOf(Shop::class, $factory->shop());
+        $this->assertEquals($this->shop->id, $factory->shop()->id, "We were expecting LDLC {$this->shop->id} and we obtained something else.");
     }
 
     /** @test */
@@ -90,5 +90,11 @@ class ExtractDataFromUrlTest extends TestCase
 
         $productId = 'PB00394053';
         $factory = ExtractDataFromUrl::from("https://www.ldlc.com/fiche/{$productId}.html?I-dont-care=about-the-query");
+    }
+
+    /** @test */
+    public function init_crawler_is_ok()
+    {
+        //code
     }
 }

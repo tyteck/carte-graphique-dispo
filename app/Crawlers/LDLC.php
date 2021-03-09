@@ -8,11 +8,11 @@ use App\Exceptions\NameNotFoundException;
 use App\Exceptions\PriceNotFoundException;
 use App\Exceptions\ProductNotFoundException;
 use App\Exceptions\UnknownShopException;
-use App\Interfaces\Shopable;
+use App\Interfaces\Crawler;
 use App\Models\Shop;
 use App\Traits\Parser;
 
-class LDLC implements Shopable
+class LDLC implements Crawler
 {
     use Parser;
 
@@ -36,7 +36,7 @@ class LDLC implements Shopable
         $this->check();
     }
 
-    public static function get(string $productId): Shopable
+    public static function get(string $productId): Crawler
     {
         return new static($productId);
     }

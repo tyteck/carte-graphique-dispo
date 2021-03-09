@@ -59,7 +59,7 @@ class UpdateCard extends Command
             /** with slug which crawler to be used */
             $class = $this->shopSlugMap[$shop->slug];
 
-            /** @var \App\Interfaces\Shopable $shopCrawler  */
+            /** @var \App\Interfaces\Crawler $shopCrawler  */
             $shopCrawler = $class::get($shop->pivot->product_id);
 
             if ($shopCrawler->productAvailable() == true) {
