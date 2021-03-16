@@ -44,7 +44,7 @@ class ExtractDataFromUrl implements ShouldQueue
     {
         /** check if url is valid */
         if (filter_var($productUrl, FILTER_VALIDATE_URL) === false) {
-            $message = "This url ({$productUrl}) is not one valid." ;
+            $message = "This url ({$productUrl}) is not valid." ;
             Log::error($message);
             throw new InvalidArgumentException($message);
         }
